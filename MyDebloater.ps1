@@ -1,61 +1,153 @@
 Add-Type -AssemblyName PresentationFramework
 
-# Create window
-$window = New-Object System.Windows.Window
-$window.Title = "My Custom Debloater"
-$window.Width = 400
-$window.Height = 300
-$window.WindowStartupLocation = "CenterScreen"
+function Show-HomePage {
+    $window = New-Object System.Windows.Window
+    $window.Title = "My Debloater"
+    $window.Width = 400
+    $window.Height = 350
+    $window.WindowStartupLocation = "CenterScreen"
 
-# Create a stack panel
-$stackPanel = New-Object System.Windows.Controls.StackPanel
-$stackPanel.Margin = "10"
-$window.Content = $stackPanel
+    $stack = New-Object System.Windows.Controls.StackPanel
+    $stack.Margin = "20"
+    $window.Content = $stack
 
-# Title text
-$title = New-Object System.Windows.Controls.TextBlock
-$title.Text = "Select what you want to debloat:"
-$title.FontSize = 16
-$title.Margin = "0,0,0,10"
-$stackPanel.Children.Add($title)
+    $title = New-Object System.Windows.Controls.TextBlock
+    $title.Text = "Choose a category:"
+    $title.FontSize = 20
+    $title.Margin = "0,0,0,20"
+    $stack.Children.Add($title)
 
-# Example checkboxes
-$chkRemoveXbox = New-Object System.Windows.Controls.CheckBox
-$chkRemoveXbox.Content = "Remove Xbox apps"
-$stackPanel.Children.Add($chkRemoveXbox)
+    # Delay Button
+    $btnDelay = New-Object System.Windows.Controls.Button
+    $btnDelay.Content = "Delay Optimization"
+    $btnDelay.Margin = "0,0,0,10"
+    $btnDelay.Height = 40
+    $stack.Children.Add($btnDelay)
 
-$chkDisableTelemetry = New-Object System.Windows.Controls.CheckBox
-$chkDisableTelemetry.Content = "Disable basic telemetry"
-$stackPanel.Children.Add($chkDisableTelemetry)
+    # Debloat Button
+    $btnDebloat = New-Object System.Windows.Controls.Button
+    $btnDebloat.Content = "Debloat Windows"
+    $btnDebloat.Margin = "0,0,0,10"
+    $btnDebloat.Height = 40
+    $stack.Children.Add($btnDebloat)
 
-$chkRemoveOnedrive = New-Object System.Windows.Controls.CheckBox
-$chkRemoveOnedrive.Content = "Remove OneDrive (example)"
-$stackPanel.Children.Add($chkRemoveOnedrive)
+    # Game Mode Button
+    $btnGame = New-Object System.Windows.Controls.Button
+    $btnGame.Content = "Game Mode"
+    $btnGame.Margin = "0,0,0,10"
+    $btnGame.Height = 40
+    $stack.Children.Add($btnGame)
 
-# Apply button
-$btnApply = New-Object System.Windows.Controls.Button
-$btnApply.Content = "Apply"
-$btnApply.Margin = "0,15,0,0"
-$btnApply.Width = 80
-$stackPanel.Children.Add($btnApply)
+    # Button Actions
+    $btnDelay.Add_Click({
+        $window.Close()
+        Show-DelayPage
+    })
 
-# What happens when Apply is clicked
-$btnApply.Add_Click({
-    if ($chkRemoveXbox.IsChecked) {
-        Write-Host "Would remove Xbox apps here"
-        # Add your real debloat code here
-    }
-    if ($chkDisableTelemetry.IsChecked) {
-        Write-Host "Would disable telemetry here"
-        # Add your real debloat code here
-    }
-    if ($chkRemoveOnedrive.IsChecked) {
-        Write-Host "Would remove OneDrive here"
-        # Add your real debloat code here
-    }
+    $btnDebloat.Add_Click({
+        $window.Close()
+        Show-DebloatPage
+    })
 
-    [System.Windows.MessageBox]::Show("Debloat actions completed (demo).", "Done")
-})
+    $btnGame.Add_Click({
+        $window.Close()
+        Show-GamePage
+    })
 
-# Show the window
-$window.ShowDialog() | Out-Null
+    $window.ShowDialog() | Out-Null
+}
+
+function Show-DelayPage {
+    $window = New-Object System.Windows.Window
+    $window.Title = "Delay Optimization"
+    $window.Width = 450
+    $window.Height = 500
+    $window.WindowStartupLocation = "CenterScreen"
+
+    $stack = New-Object System.Windows.Controls.StackPanel
+    $stack.Margin = "20"
+    $window.Content = $stack
+
+    $title = New-Object System.Windows.Controls.TextBlock
+    $title.Text = "Delay Optimization Options"
+    $title.FontSize = 18
+    $title.Margin = "0,0,0,20"
+    $stack.Children.Add($title)
+
+    # Example checkbox
+    $chkTelemetry = New-Object System.Windows.Controls.CheckBox
+    $chkTelemetry.Content = "Disable Telemetry"
+    $chkTelemetry.ToolTip = "Reduces background data collection. Recommended."
+    $stack.Children.Add($chkTelemetry)
+
+    # Back button
+    $btnBack = New-Object System.Windows.Controls.Button
+    $btnBack.Content = "Back"
+    $btnBack.Margin = "0,20,0,0"
+    $stack.Children.Add($btnBack)
+
+    $btnBack.Add_Click({
+        $window.Close()
+        Show-HomePage
+    })
+
+    $window.ShowDialog() | Out-Null
+}
+
+function Show-DebloatPage {
+    $window = New-Object System.Windows.Window
+    $window.Title = "Debloat Windows"
+    $window.Width = 450
+    $window.Height = 500
+    $window.WindowStartupLocation = "CenterScreen"
+
+    $stack = New-Object System.Windows.Controls.StackPanel
+    $stack.Margin = "20"
+    $window.Content = $stack
+
+    $title = New-Object System.Windows.Controls.TextBlock
+    $title.Text = "Debloat Options"
+    $title.FontSize = 18
+    $title.Margin = "0,0,0,20"
+    $stack.Children.Add($title)
+
+    # Example checkbox
+    $chkRemoveXbox = New-Object System.Windows.Controls.CheckBox
+    $chkRemoveXbox.Content = "Remove Xbox Apps"
+    $chkRemoveXbox.ToolTip = "Removes Xbox-related apps. Safe."
+    $stack.Children.Add($chkRemoveXbox)
+
+    # Back button
+    $btnBack = New-Object System.Windows.Controls.Button
+    $btnBack.Content = "Back"
+    $btnBack.Margin = "0,20,0,0"
+    $stack.Children.Add($btnBack)
+
+    $btnBack.Add_Click({
+        $window.Close()
+        Show-HomePage
+    })
+
+    $window.ShowDialog() | Out-Null
+}
+
+function Show-GamePage {
+    $window = New-Object System.Windows.Window
+    $window.Title = "Game Mode"
+    $window.Width = 450
+    $window.Height = 500
+    $window.WindowStartupLocation = "CenterScreen"
+
+    $stack = New-Object System.Windows.Controls.StackPanel
+    $stack.Margin = "20"
+    $window.Content = $stack
+
+    $title = New-Object System.Windows.Controls.TextBlock
+    $title.Text = "Game Mode Options"
+    $title.FontSize = 18
+    $title.Margin = "0,0,0,20"
+    $stack.Children.Add($title)
+
+    # Example checkbox
+    $chkPowerPlan = New-Object System.Windows.Controls.CheckBox
+    $chkPowerPlan.Content
