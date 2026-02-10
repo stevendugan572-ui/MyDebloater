@@ -150,4 +150,22 @@ function Show-GamePage {
 
     # Example checkbox
     $chkPowerPlan = New-Object System.Windows.Controls.CheckBox
-    $chkPowerPlan.Content
+    $chkPowerPlan.Content = "Enable High Performance Power Plan"
+    $chkPowerPlan.ToolTip = "Improves CPU responsiveness. Recommended."
+    $stack.Children.Add($chkPowerPlan)
+
+    # Back button
+    $btnBack = New-Object System.Windows.Controls.Button
+    $btnBack.Content = "Back"
+    $btnBack.Margin = "0,20,0,0"
+    $stack.Children.Add($btnBack)
+
+    $btnBack.Add_Click({
+        $window.Close()
+        Show-HomePage
+    })
+
+    $window.ShowDialog() | Out-Null
+}
+
+Show-HomePage
